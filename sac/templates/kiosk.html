@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SAC Kiosk</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Makerspace Access Kiosk</p>
+        <h1>Swipe to Enter</h1>
+        <p class="subtle">Scan your campus ID or enter your email address.</p>
+      </div>
+      <a class="button ghost" href="/admin">Admin Console</a>
+    </header>
+
+    <section class="card">
+      <h2>Swipe Check</h2>
+      <form id="swipe-form" class="grid-form">
+        <label>
+          ID or Email
+          <input type="text" name="input_value" class="kiosk-input" placeholder="Swipe or type" autocomplete="off" autofocus required />
+        </label>
+        <label>
+          Certification
+          <select name="certification_id" id="certification-select">
+            <option value="">Space Access (default)</option>
+          </select>
+        </label>
+        <button type="submit" class="button">Check Access</button>
+      </form>
+      <div id="swipe-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>New User Onboarding</h2>
+      <p class="subtle">Complete this form if you have never used the space before.</p>
+      <form id="onboard-form" class="grid-form">
+        <label>
+          Campus ID
+          <input type="text" name="campus_id" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          First Name
+          <input type="text" name="first_name" required />
+        </label>
+        <label>
+          Last Name
+          <input type="text" name="last_name" required />
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="terms_accepted" required />
+          I agree to the terms of use.
+        </label>
+        <button type="submit" class="button">Create Pending Account</button>
+      </form>
+      <div class="terms-box" id="terms-box"></div>
+      <div id="onboard-result" class="result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='kiosk.js') }}"></script>
+</body>
+</html>

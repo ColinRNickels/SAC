@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SAC Admin Console</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Admin Console</p>
+        <h1>Manage Access</h1>
+        <p class="subtle">Approve users, manage certifications, and review activity.</p>
+      </div>
+      <a class="button ghost" href="/">Back to Kiosk</a>
+    </header>
+
+    <section class="card">
+      <h2>Admin Access</h2>
+      <p class="subtle">Enter the admin token to enable protected actions.</p>
+      <form id="admin-auth-form" class="grid-form">
+        <label>
+          Admin Token
+          <input type="password" id="admin-token" autocomplete="current-password" placeholder="Set in SAC_ADMIN_TOKEN" required />
+        </label>
+        <label>
+          Staff Name
+          <input type="text" id="admin-name" placeholder="Your name" required />
+        </label>
+        <button type="submit" class="button">Save Token</button>
+        <button type="button" id="admin-logout" class="button ghost">Log out</button>
+      </form>
+      <div id="admin-auth-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>Pending Users</h2>
+      <div id="pending-users" class="table"></div>
+    </section>
+
+    <section class="card">
+      <h2>All Users</h2>
+      <div id="all-users" class="table"></div>
+    </section>
+
+    <section class="card">
+      <h2>Certifications</h2>
+      <form id="cert-form" class="grid-form">
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Scope
+          <select name="scope" required>
+            <option value="space">Space</option>
+            <option value="tool">Tool</option>
+          </select>
+        </label>
+        <label>
+          Description
+          <input type="text" name="description" />
+        </label>
+        <button type="submit" class="button">Create Certification</button>
+      </form>
+      <div id="certifications" class="table"></div>
+    </section>
+
+    <section class="card">
+      <h2>Grant or Revoke Certification</h2>
+      <form id="grant-form" class="grid-form">
+        <label>
+          User ID
+          <input type="number" name="user_id" required />
+        </label>
+        <label>
+          Certification
+          <select name="certification_id" id="grant-certification" required></select>
+        </label>
+        <label>
+          Granted By
+          <input type="text" name="granted_by" placeholder="Staff name" required />
+        </label>
+        <div class="button-row">
+          <button type="submit" class="button">Grant</button>
+          <button type="button" id="revoke-button" class="button ghost">Revoke</button>
+        </div>
+      </form>
+      <div id="grant-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>Analytics Snapshot</h2>
+      <div class="analytics-grid">
+        <div>
+          <h3>Swipes by Day</h3>
+          <div id="swipe-analytics" class="table"></div>
+        </div>
+        <div>
+          <h3>Unique Users</h3>
+          <div id="unique-analytics" class="table"></div>
+        </div>
+        <div>
+          <h3>Top Certifications</h3>
+          <div id="cert-analytics" class="table"></div>
+        </div>
+      </div>
+      <div class="heatmap-section">
+        <h3>Swipe Heatmap (Day x Hour)</h3>
+        <div id="heatmap-grid" class="heatmap-grid"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Exports</h2>
+      <p class="subtle">Download CSV exports for reporting.</p>
+      <div class="button-row">
+        <a class="button" href="/api/analytics/export?type=swipes">Export Swipes CSV</a>
+        <a class="button ghost" href="/api/analytics/export?type=users">Export Users CSV</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Terms of Use</h2>
+      <p class="subtle">Update the kiosk terms text displayed during onboarding.</p>
+      <form id="terms-form" class="grid-form">
+        <label class="full-width">
+          Terms Text
+          <textarea name="terms" id="terms-input" rows="8" required></textarea>
+        </label>
+        <button type="submit" class="button">Save Terms</button>
+      </form>
+      <div id="terms-result" class="result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='admin.js') }}"></script>
+</body>
+</html>
